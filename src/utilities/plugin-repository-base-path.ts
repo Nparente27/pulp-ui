@@ -8,11 +8,11 @@ import { DebRepositoryAPI } from '../api/deb-repository';
 import { FileDistributionAPI } from '../api/file-distribution';
 import { FileRemoteAPI } from '../api/file-remote';
 import { FileRepositoryAPI } from '../api/file-repository';
-import { RPMDistributionAPI } from '../api/rpm-distribution';
-import { RPMRemoteAPI } from '../api/rpm-remote';
 import { PythonDistributionAPI } from '../api/python-distribution';
 import { PythonRemoteAPI } from '../api/python-remote';
 import { PythonRepositoryAPI } from '../api/python-repository';
+import { RPMDistributionAPI } from '../api/rpm-distribution';
+import { RPMRemoteAPI } from '../api/rpm-remote';
 import { RPMRepositoryAPI } from '../api/rpm-repository';
 
 // returns the preferred distribution base_path given a repo name
