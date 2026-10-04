@@ -15,6 +15,8 @@ interface IProps {
   // Which way the mirror switch starts. Plugins disagree: pulp_deb's API defaults
   // a sync to not mirroring, where ansible and file have always offered to.
   defaultMirror?: boolean;
+  // pulp_python's sync has no optimize option
+  showOptimize?: boolean;
   syncAction: (syncParams) => Promise<void>;
   name: string;
   // When given, a sync policy dropdown replaces the mirror switch (pulp_rpm).
@@ -27,6 +29,7 @@ export const SyncModal = ({
   defaultMirror = true,
   defaultSyncPolicy,
   syncPolicies,
+  showOptimize = true,
   syncAction,
   name,
 }: IProps) => {
@@ -120,24 +123,28 @@ export const SyncModal = ({
         </FormGroup>
       )}
       <br />
-      <FormGroup
-        label={t`Optimize`}
-        labelIcon={
-          <HelpButton
-            content={t`Only perform the sync if changes are reported by the remote server. To force a sync to happen, deselect this option.`}
-          />
-        }
-      >
-        <Switch
-          isChecked={syncParams.optimize}
-          onChange={(_event, optimize) =>
-            setSyncParams({ ...syncParams, optimize })
-          }
-          label={t`Only perform the sync if changes are reported by the remote server.`}
-          labelOff={t`Force a sync to happen.`}
-        />
-      </FormGroup>
-      <br />
+      {showOptimize && (
+        <>
+          <FormGroup
+            label={t`Optimize`}
+            labelIcon={
+              <HelpButton
+                content={t`Only perform the sync if changes are reported by the remote server. To force a sync to happen, deselect this option.`}
+              />
+            }
+          >
+            <Switch
+              isChecked={syncParams.optimize}
+              onChange={(_event, optimize) =>
+                setSyncParams({ ...syncParams, optimize })
+              }
+              label={t`Only perform the sync if changes are reported by the remote server.`}
+              labelOff={t`Force a sync to happen.`}
+            />
+          </FormGroup>
+          <br />
+        </>
+      )}
     </Modal>
   );
 };

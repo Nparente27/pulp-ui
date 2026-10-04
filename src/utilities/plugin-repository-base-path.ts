@@ -10,6 +10,9 @@ import { FileRemoteAPI } from '../api/file-remote';
 import { FileRepositoryAPI } from '../api/file-repository';
 import { RPMDistributionAPI } from '../api/rpm-distribution';
 import { RPMRemoteAPI } from '../api/rpm-remote';
+import { PythonDistributionAPI } from '../api/python-distribution';
+import { PythonRemoteAPI } from '../api/python-remote';
+import { PythonRepositoryAPI } from '../api/python-repository';
 import { RPMRepositoryAPI } from '../api/rpm-repository';
 
 // returns the preferred distribution base_path given a repo name
@@ -37,6 +40,12 @@ export function plugin2api(plugin) {
         DistributionAPI: FileDistributionAPI,
         RemoteAPI: FileRemoteAPI,
         RepositoryAPI: FileRepositoryAPI,
+      };
+    case 'python':
+      return {
+        DistributionAPI: PythonDistributionAPI,
+        RemoteAPI: PythonRemoteAPI,
+        RepositoryAPI: PythonRepositoryAPI,
       };
     case 'rpm':
       return {
