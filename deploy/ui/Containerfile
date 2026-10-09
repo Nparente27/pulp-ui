@@ -5,7 +5,11 @@ WORKDIR /src
 COPY package.json package-lock.json .npmrc ./
 RUN npm ci
 COPY . .
-RUN git config --global --add safe.directory /src && npm run build
+# refresh the translation catalogs first: strings missing from them render as
+# message ids in a production build
+RUN git config --global --add safe.directory /src && \
+    npm run gettext:extract && npm run gettext:compile && \
+    npm run build
 
 # Runtime stage: unprivileged nginx serving the UI and proxying to Pulp
 FROM docker.io/nginxinc/nginx-unprivileged:stable-alpine
