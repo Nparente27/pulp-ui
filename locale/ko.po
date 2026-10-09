@@ -5477,6 +5477,7 @@ msgstr ""
 
 #: src/containers/release/detail.tsx
 #: src/containers/release/list.tsx
+#: src/menu.tsx
 msgid "Releases"
 msgstr ""
 

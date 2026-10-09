@@ -141,6 +141,11 @@ function standaloneMenu() {
         url: formatPath(Paths.rpm.package.list),
       }),
     ]),
+    menuItem(t`Releases`, {
+      url: formatPath(Paths.core.release.list),
+      alternativeUrls: [altPath(Paths.core.release.detail)],
+      condition: loggedIn,
+    }),
     menuItem(t`Task management`, {
       url: formatPath(Paths.core.task.list),
       alternativeUrls: [altPath(Paths.core.task.detail)],

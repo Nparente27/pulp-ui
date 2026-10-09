@@ -64,6 +64,8 @@ import {
   RPMRepositoryDetail,
   RPMRepositoryEdit,
   RPMRepositoryList,
+  ReleaseDetail,
+  ReleaseList,
   RoleCreate,
   RoleList,
   Search,
@@ -336,6 +338,14 @@ const routes: IRouteConfig[] = [
     component: NamespaceDetail,
     path: Paths.ansible.namespace.detail,
     beta: true,
+  },
+  {
+    component: ReleaseDetail,
+    path: Paths.core.release.detail,
+  },
+  {
+    component: ReleaseList,
+    path: Paths.core.release.list,
   },
   {
     component: PulpStatus,

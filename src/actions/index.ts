@@ -19,6 +19,13 @@ export {
   pythonRepositoryVersionRevertAction,
   rpmRepositoryVersionRevertAction,
 } from './repository-version-revert';
+export {
+  ansibleRepositoryVersionAddToReleaseAction,
+  debRepositoryVersionAddToReleaseAction,
+  fileRepositoryVersionAddToReleaseAction,
+  pythonRepositoryVersionAddToReleaseAction,
+  rpmRepositoryVersionAddToReleaseAction,
+} from './repository-version-add-to-release';
 export { debRemoteCreateAction } from './deb-remote-create';
 export { debRemoteDeleteAction } from './deb-remote-delete';
 export { debRemoteEditAction } from './deb-remote-edit';

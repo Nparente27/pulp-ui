@@ -103,6 +103,10 @@ export const Paths = {
       detail: '/groups/detail/:group',
       list: '/groups',
     },
+    release: {
+      detail: '/releases/detail/:name',
+      list: '/releases',
+    },
     role: {
       create: '/roles/create',
       edit: '/roles/edit/:role',

@@ -5478,6 +5478,7 @@ msgstr "Release \"{release}\" updated."
 
 #: src/containers/release/detail.tsx
 #: src/containers/release/list.tsx
+#: src/menu.tsx
 msgid "Releases"
 msgstr "Releases"
 

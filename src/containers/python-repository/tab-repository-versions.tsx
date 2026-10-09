@@ -2,7 +2,10 @@ import { t } from '@lingui/core/macro';
 import { Table, Td, Th, Tr } from '@patternfly/react-table';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { pythonRepositoryVersionRevertAction } from 'src/actions';
+import {
+  pythonRepositoryVersionAddToReleaseAction,
+  pythonRepositoryVersionRevertAction,
+} from 'src/actions';
 import { PythonRepositoryAPI } from 'src/api';
 import {
   DateComponent,
@@ -226,7 +229,10 @@ export const RepositoryVersionsTab = ({
       defaultSort={'-pulp_created'}
       errorTitle={t`Repository versions could not be displayed.`}
       filterConfig={null}
-      listItemActions={[pythonRepositoryVersionRevertAction]}
+      listItemActions={[
+        pythonRepositoryVersionRevertAction,
+        pythonRepositoryVersionAddToReleaseAction,
+      ]}
       noDataButton={null}
       noDataDescription={t`Repository versions will appear once the repository is modified.`}
       noDataTitle={t`No repository versions yet`}

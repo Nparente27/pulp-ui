@@ -37,6 +37,8 @@ export function waitForTask(task, options: Options = {}) {
         }),
       );
     }
+
+    return result.data;
   });
 }
 

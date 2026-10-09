@@ -40,6 +40,8 @@ export { default as NamespaceDetail } from './namespace-detail/namespace-detail'
 export { default as MyNamespaces } from './namespace-list/my-namespaces';
 export { default as Partners } from './namespace-list/partners';
 export { default as PulpStatus } from './pulp-status';
+export { default as ReleaseDetail } from './release/detail';
+export { default as ReleaseList } from './release/list';
 export { default as RoleCreate } from './role-management/role-create';
 export { default as EditRole } from './role-management/role-edit';
 export { default as RoleList } from './role-management/role-list';
