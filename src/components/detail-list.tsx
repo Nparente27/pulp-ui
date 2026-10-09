@@ -29,6 +29,7 @@ interface IProps<T> {
     hasObjectPermission?;
     hasPermission;
     query;
+    refresh?: () => void;
     setState?;
     state?;
   };

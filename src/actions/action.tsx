@@ -4,7 +4,14 @@ import { DropdownItem } from '@patternfly/react-core/deprecated';
 import { type ReactNode } from 'react';
 import { Tooltip } from '../components/patternfly-wrappers/tooltip';
 
-type ModalType = ({ addAlert, listQuery, query, setState, state }) => ReactNode;
+type ModalType = ({
+  addAlert,
+  listQuery,
+  query,
+  refresh,
+  setState,
+  state,
+}) => ReactNode;
 
 interface ActionParams {
   buttonVariant?: 'primary' | 'secondary';

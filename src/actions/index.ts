@@ -12,7 +12,13 @@ export { ansibleRepositoryCreateAction } from './ansible-repository-create';
 export { ansibleRepositoryDeleteAction } from './ansible-repository-delete';
 export { ansibleRepositoryEditAction } from './ansible-repository-edit';
 export { ansibleRepositorySyncAction } from './ansible-repository-sync';
-export { ansibleRepositoryVersionRevertAction } from './ansible-repository-version-revert';
+export {
+  ansibleRepositoryVersionRevertAction,
+  debRepositoryVersionRevertAction,
+  fileRepositoryVersionRevertAction,
+  pythonRepositoryVersionRevertAction,
+  rpmRepositoryVersionRevertAction,
+} from './repository-version-revert';
 export { debRemoteCreateAction } from './deb-remote-create';
 export { debRemoteDeleteAction } from './deb-remote-delete';
 export { debRemoteEditAction } from './deb-remote-edit';
