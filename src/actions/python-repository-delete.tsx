@@ -23,6 +23,8 @@ export const pythonRepositoryDeleteAction = Action({
           })
         }
         name={state.deleteModalOpen.name}
+        plugin='python'
+        pulpId={state.deleteModalOpen.pulpId}
       />
     ) : null,
   onClick: (

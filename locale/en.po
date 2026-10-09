@@ -1644,6 +1644,10 @@ msgstr "Copyable input"
 msgid "could not be determined yet"
 msgstr "could not be determined yet"
 
+#: src/components/delete-repository-modal.tsx
+msgid "Could not check whether this repository is part of a release."
+msgstr "Could not check whether this repository is part of a release."
+
 #: src/containers/collection-detail/collection-import-log.tsx
 msgid "Could not load import log"
 msgstr "Could not load import log"
@@ -2126,6 +2130,10 @@ msgstr "Deleting environment <0>{selectedItem}</0>."
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
 msgid "Deleting image <0>{digest}</0>."
 msgstr "Deleting image <0>{digest}</0>."
+
+#: src/components/delete-repository-modal.tsx
+msgid "Deleting it also deletes every version these releases pin. Their URLs for this repository stop working, and the content cannot be brought back by recreating the repository."
+msgstr "Deleting it also deletes every version these releases pin. Their URLs for this repository stop working, and the content cannot be brought back by recreating the repository."
 
 #. placeholder {0}: namespace.name
 #: src/containers/namespace-detail/namespace-detail.tsx
@@ -3470,6 +3478,10 @@ msgstr "How many versions of each package to keep; older ones are dropped on syn
 #: src/containers/namespace-detail/namespace-detail.tsx
 msgid "I understand that this action cannot be undone."
 msgstr "I understand that this action cannot be undone."
+
+#: src/components/delete-repository-modal.tsx
+msgid "I understand these releases will lose this repository."
+msgstr "I understand these releases will lose this repository."
 
 #: src/components/sync-modal.tsx
 msgid "If selected, all content that is not present in the remote repository will be removed from the local repository; otherwise, sync will add missing content."
@@ -7349,6 +7361,11 @@ msgstr "This removes the distributions serving release \"{deleting}\", so its UR
 msgid "This removes the distributions serving release \"{name}\", so its URLs stop working. The repositories and their versions are not changed."
 msgstr "This removes the distributions serving release \"{name}\", so its URLs stop working. The repositories and their versions are not changed."
 
+#. placeholder {0}: byRelease.length
+#: src/components/delete-repository-modal.tsx
+msgid "This repository is part of {0} release(s)"
+msgstr "This repository is part of {0} release(s)"
+
 #: src/components/tag-manifest-modal.tsx
 msgid "This tag already exists on another image. Do you want to move it to this image?"
 msgstr "This tag already exists on another image. Do you want to move it to this image?"
@@ -7913,6 +7930,11 @@ msgstr "Version"
 #: src/containers/rpm-repository/detail.tsx
 msgid "Version {repositoryVersion}"
 msgstr "Version {repositoryVersion}"
+
+#. placeholder {0}: distribution.base_path
+#: src/components/delete-repository-modal.tsx
+msgid "version {versionNumber} at {0}"
+msgstr "version {versionNumber} at {0}"
 
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/containers/deb-repository/tab-repository-versions.tsx

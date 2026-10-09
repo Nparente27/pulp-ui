@@ -144,7 +144,7 @@ export const ReleasePinModal = ({
             onChange={(_e, value) => setRelease(value.trim())}
             isDisabled={!!fixedRelease}
             list='release-names'
-            placeholder='HIVE-RELEASE'
+            placeholder='RELEASE-NAME'
             validated={!release || releaseValid ? 'default' : 'error'}
           />
           <datalist id='release-names'>

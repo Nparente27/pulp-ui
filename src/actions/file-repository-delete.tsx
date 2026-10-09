@@ -22,6 +22,8 @@ export const fileRepositoryDeleteAction = Action({
           })
         }
         name={state.deleteModalOpen.name}
+        plugin='file'
+        pulpId={state.deleteModalOpen.pulpId}
       />
     ) : null,
   onClick: (

@@ -23,6 +23,8 @@ export const debRepositoryDeleteAction = Action({
           })
         }
         name={state.deleteModalOpen.name}
+        plugin='deb'
+        pulpId={state.deleteModalOpen.pulpId}
       />
     ) : null,
   onClick: (

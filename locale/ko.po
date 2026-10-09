@@ -1643,6 +1643,10 @@ msgstr ""
 msgid "could not be determined yet"
 msgstr "아직 결정할 수 없음"
 
+#: src/components/delete-repository-modal.tsx
+msgid "Could not check whether this repository is part of a release."
+msgstr ""
+
 #: src/containers/collection-detail/collection-import-log.tsx
 msgid "Could not load import log"
 msgstr "가져오기 로그를 로드할 수 없음"
@@ -2124,6 +2128,10 @@ msgstr ""
 
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
 msgid "Deleting image <0>{digest}</0>."
+msgstr ""
+
+#: src/components/delete-repository-modal.tsx
+msgid "Deleting it also deletes every version these releases pin. Their URLs for this repository stop working, and the content cannot be brought back by recreating the repository."
 msgstr ""
 
 #. placeholder {0}: namespace.name
@@ -3469,6 +3477,10 @@ msgstr ""
 #: src/containers/namespace-detail/namespace-detail.tsx
 msgid "I understand that this action cannot be undone."
 msgstr "이 작업을 취소할 수 없다는 것을 알고 있습니다."
+
+#: src/components/delete-repository-modal.tsx
+msgid "I understand these releases will lose this repository."
+msgstr ""
 
 #: src/components/sync-modal.tsx
 msgid "If selected, all content that is not present in the remote repository will be removed from the local repository; otherwise, sync will add missing content."
@@ -7348,6 +7360,11 @@ msgstr ""
 msgid "This removes the distributions serving release \"{name}\", so its URLs stop working. The repositories and their versions are not changed."
 msgstr ""
 
+#. placeholder {0}: byRelease.length
+#: src/components/delete-repository-modal.tsx
+msgid "This repository is part of {0} release(s)"
+msgstr ""
+
 #: src/components/tag-manifest-modal.tsx
 msgid "This tag already exists on another image. Do you want to move it to this image?"
 msgstr "이 태그는 다른 이미지에 이미 존재합니다. 이 이미지로 이동하시겠습니까?"
@@ -7912,6 +7929,11 @@ msgstr "버전"
 #: src/containers/rpm-repository/detail.tsx
 msgid "Version {repositoryVersion}"
 msgstr "버전 {repositoryVersion}"
+
+#. placeholder {0}: distribution.base_path
+#: src/components/delete-repository-modal.tsx
+msgid "version {versionNumber} at {0}"
+msgstr ""
 
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/containers/deb-repository/tab-repository-versions.tsx

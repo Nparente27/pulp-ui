@@ -23,6 +23,8 @@ export const rpmRepositoryDeleteAction = Action({
           })
         }
         name={state.deleteModalOpen.name}
+        plugin='rpm'
+        pulpId={state.deleteModalOpen.pulpId}
       />
     ) : null,
   onClick: (

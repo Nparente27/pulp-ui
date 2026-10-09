@@ -22,6 +22,8 @@ export const ansibleRepositoryDeleteAction = Action({
           })
         }
         name={state.deleteModalOpen.name}
+        plugin='ansible'
+        pulpId={state.deleteModalOpen.pulpId}
       />
     ) : null,
   onClick: (

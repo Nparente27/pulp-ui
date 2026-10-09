@@ -2,7 +2,7 @@ import { config } from 'src/ui-config';
 import { waitForTaskUrl } from '../utilities/wait-for-task';
 import { PulpAPI } from './pulp';
 
-// A release is a named set of repository versions, e.g. HIVE-RELEASE. Pulp has
+// A release is a named set of repository versions, e.g. RELEASE-NAME. Pulp has
 // no such object, so a release is stored as one distribution per repository,
 // each pinned to a version and labelled release=<name>. Every distribution
 // keeps serving exactly that version at <release>/<plugin>/<repository>, no
