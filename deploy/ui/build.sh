@@ -1,33 +1,33 @@
 #!/usr/bin/env bash
-# Build the enclave UI image from deploy/ui/Containerfile.
+# Build the enclave UI image with root podman and copy it to the transfer drive.
 #
-# Usage: deploy/ui/build.sh [-i image] [-t tag] [-p platform] [-e engine] [-P] [-- extra build args]
+# Usage: deploy/ui/build.sh [-d dir] [-n] [-p platform] [-- extra podman build args]
 #
-#   -i  image name                       (default: $IMAGE or localhost/pulp-ui)
-#   -t  extra tag; always also tagged with the git short sha
-#                                        (default: $TAG or latest)
+# Builds localhost/pulp-ui-enclave:<version>-enclave.<N>, where <version> comes
+# from package.json and <N> is one more than the highest build number already
+# in root's podman images or in the transfer directory for that version.
+# The image is then saved as <dir>/pulp-ui-enclave_<tag>.tar with a .sha256 next to it.
+#
+#   -d  transfer directory   (default: /run/media/nparente/pulp-transfer/images)
+#   -n  build only, don't copy to the transfer directory
 #   -p  target platform, e.g. linux/amd64 (default: the host's)
-#   -e  container engine                 (default: $ENGINE, else podman, else docker)
-#   -P  push both tags after building
 #
-# Anything after -- goes straight to "<engine> build", e.g. -- --no-cache
+# Anything after -- goes straight to "podman build", e.g. -- --no-cache
 set -euo pipefail
 
-usage() { sed -n '2,13p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,16p' "$0" | sed 's/^# \{0,1\}//'; }
 
-image="${IMAGE:-localhost/pulp-ui}"
-tag="${TAG:-latest}"
+image=localhost/pulp-ui-enclave
+dest=/run/media/nparente/pulp-transfer/images
+copy=true
 platform=""
-engine="${ENGINE:-}"
-push=false
+orig_args=("$@")
 
-while getopts ":i:t:p:e:Ph" opt; do
+while getopts ":d:np:h" opt; do
   case "$opt" in
-    i) image="$OPTARG" ;;
-    t) tag="$OPTARG" ;;
+    d) dest="$OPTARG" ;;
+    n) copy=false ;;
     p) platform="$OPTARG" ;;
-    e) engine="$OPTARG" ;;
-    P) push=true ;;
     h) usage; exit 0 ;;
     *) usage >&2; exit 2 ;;
   esac
@@ -35,33 +35,64 @@ done
 shift $((OPTIND - 1))
 [[ "${1:-}" == "--" ]] && shift
 
-if [[ -z "$engine" ]]; then
-  if command -v podman >/dev/null; then
-    engine=podman
-  elif command -v docker >/dev/null; then
-    engine=docker
-  else
-    echo "error: neither podman nor docker found; set -e or ENGINE" >&2
+# images live in root's podman storage
+if [[ $EUID -ne 0 ]]; then
+  exec sudo -- "$(readlink -f "$0")" "${orig_args[@]}"
+fi
+
+# the build context is the repository root, wherever this is run from
+root="$(cd "$(dirname "$(readlink -f "$0")")/../.." && pwd)"
+
+version="$(sed -n 's/^  "version": "\(.*\)",$/\1/p' "$root/package.json")"
+if [[ -z "$version" ]]; then
+  echo "error: could not read the version from $root/package.json" >&2
+  exit 1
+fi
+
+if $copy; then
+  if [[ ! -d "$dest" ]]; then
+    echo "error: $dest does not exist; is the transfer drive mounted? (use -n to skip the copy)" >&2
+    exit 1
+  fi
+  if [[ ! -w "$dest" ]]; then
+    echo "error: $dest is not writable" >&2
     exit 1
   fi
 fi
 
-# the build context is the repository root, wherever this is run from
-root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-sha="$(git -C "$root" rev-parse --short HEAD 2>/dev/null || echo unknown)"
-if [[ -n "$(git -C "$root" status --porcelain 2>/dev/null)" ]]; then
-  sha="$sha-dirty"
+# next build number: highest existing <version>-enclave.N in podman or on the drive, plus one
+last=0
+while read -r n; do
+  if ((n > last)); then
+    last=$n
+  fi
+done < <(
+  {
+    podman images --noheading --format '{{.Tag}}' --filter "reference=$image"
+    if [[ -d "$dest" ]]; then
+      find "$dest" -maxdepth 1 -name "pulp-ui-enclave_*.tar" -printf '%f\n' \
+        | sed 's/^pulp-ui-enclave_\(.*\)\.tar$/\1/'
+    fi
+  } | sed -n "s/^${version//./\\.}-enclave\.\([0-9][0-9]*\)$/\1/p"
+)
+tag="$version-enclave.$((last + 1))"
+
+args=(build -f "$root/deploy/ui/Containerfile" -t "$image:$tag")
+if [[ -n "$platform" ]]; then
+  args+=(--platform "$platform")
 fi
 
-args=(build -f "$root/deploy/ui/Containerfile" -t "$image:$tag" -t "$image:$sha")
-[[ -n "$platform" ]] && args+=(--platform "$platform")
+echo "+ podman ${args[*]} $* $root"
+podman "${args[@]}" "$@" "$root"
+echo "Built $image:$tag"
 
-echo "+ $engine ${args[*]} $* $root"
-"$engine" "${args[@]}" "$@" "$root"
-
-echo "Built $image:$tag and $image:$sha"
-
-if $push; then
-  "$engine" push "$image:$tag"
-  "$engine" push "$image:$sha"
+if $copy; then
+  file="pulp-ui-enclave_$tag.tar"
+  echo "Saving to $dest/$file"
+  podman save -o "$dest/$file.partial" "$image:$tag"
+  mv "$dest/$file.partial" "$dest/$file"
+  (cd "$dest" && sha256sum "$file" >"$file.sha256")
+  sync
+  echo "Copied $dest/$file"
+  echo "On the other side: podman load -i $file"
 fi
